@@ -1,2 +1,2 @@
 # Master
-Testrepo für die Masterarbeit, erstmal WIP
+Testreihen für die Masterarbeit, erstmal WIP
