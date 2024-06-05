@@ -12,8 +12,6 @@ This project is part of a master's thesis titled "Applying Schrödinger Bridge M
 ### Notebooks
 - `onedim-slow.ipynb`: Notebook for one-dimensional financial time series data, such as stock prices or index returns.
 
-## Usage
-Researchers and practitioners interested in generative modeling of financial time series can utilize this codebase for experimentation and analysis. Instructions for usage are provided within the respective notebooks.
 
 ## Performance Evaluation
 The performance of the generative model is evaluated through various experiments on financial datasets, assessing metrics such as accuracy, robustness, and applicability to real-world scenarios.
