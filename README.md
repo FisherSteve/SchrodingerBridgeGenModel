@@ -11,6 +11,7 @@ This project is part of a master's thesis titled "Applying Schrödinger Bridge M
 
 ### Notebooks
 - `onedim-slow.ipynb`: Notebook for one-dimensional financial time series data, such as stock prices or index returns.
+- `multidim-fast.ipynb`: Notebook for multidimensional financial time series data, such as image sequences or high-dimensional market data.
 
 
 ## Performance Evaluation
