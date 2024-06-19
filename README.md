@@ -10,8 +10,8 @@ This repository presents an implementation of the Schrödinger bridge (SB) appro
 The code provided here is e.g. for financial time series data. It implements the SB approach described in the literature, offering functionalities to estimate the drift function from historical data samples and simulate synthetic time series data.
 
 ### Notebooks
-- `onedim-slow.ipynb`: Notebook for one-dimensional financial time series data, such as stock prices or index returns.
-- `multidim-fast.ipynb`: Notebook for multidimensional financial time series data, such as image sequences or high-dimensional market data.
+- `onedim.ipynb`: Notebook for one-dimensional financial time series data, such as stock prices or index returns.
+- `multidim.ipynb`: Notebook for multidimensional financial time series data, such as image sequences or high-dimensional market data.
 
 
 ## Performance Evaluation
