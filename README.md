@@ -8,33 +8,24 @@ This repository presents an implementation of the Schrödinger bridge (SB) appro
 
 ## Example
 
-Here is a small example on how an RGB image is being generated with the SBTS
-These animations were generated using different step parameters for the initial part of the data (i.e. skipping every m-th step), but no frames were skipped in the last 100 frames.
+Here is an example on how an RGB image is being generated with the SBTS.
+These animations were generated using a step parameters for the initial part of the data (i.e. skipping every m-th step), but no frames were skipped in the last 100 frames.
 
 <table>
   <tr>
     <td><img src="./images/created_animation_step100_last100_1.gif" alt="Animation 1" width="200"/></td>
     <td><img src="./images/created_animation_step100_last100_2.gif" alt="Animation 2" width="200"/></td>
     <td><img src="./images/created_animation_step100_last100_3.gif" alt="Animation 3" width="200"/></td>
+  </tr>
+  <tr>
     <td><img src="./images/created_animation_step100_last100_4.gif" alt="Animation 4" width="200"/></td>
-  </tr>
-  <tr>
-    <td><img src="./images/created_animation_step100_last100_5.gif" alt="Animation 5" width="200"/></td>
     <td><img src="./images/created_animation_step100_last100_6.gif" alt="Animation 6" width="200"/></td>
-    <td><img src="./images/created_animation_step100_last100_7.gif" alt="Animation 7" width="200"/></td>
-    <td><img src="./images/created_animation_step100_last100_8.gif" alt="Animation 8" width="200"/></td>
-  </tr>
-  <tr>
     <td><img src="./images/created_animation_step100_last100_9.gif" alt="Animation 9" width="200"/></td>
-    <td><img src="./images/created_animation_step100_last100_10.gif" alt="Animation 10" width="200"/></td>
-    <td><img src="./images/created_animation_step100_last100_11.gif" alt="Animation 11" width="200"/></td>
-    <td><img src="./images/created_animation_step100_last100_12.gif" alt="Animation 12" width="200"/></td>
   </tr>
   <tr>
-    <td><img src="./images/created_animation_step100_last100_13.gif" alt="Animation 13" width="200"/></td>
+    <td><img src="./images/created_animation_step100_last100_10.gif" alt="Animation 10" width="200"/></td>
+    <td><img src="./images/created_animation_step100_last100_12.gif" alt="Animation 12" width="200"/></td>
     <td><img src="./images/created_animation_step100_last100_14.gif" alt="Animation 14" width="200"/></td>
-    <td><img src="./images/created_animation_step100_last100_15.gif" alt="Animation 15" width="200"/></td>
-    <td><img src="./images/created_animation_step100_last100_16.gif" alt="Animation 16" width="200"/></td>
   </tr>
 </table>
 
