@@ -35,7 +35,7 @@ The code provided here is for e.g. financial time series data. It implements the
 
 ### Notebooks
 - `onedim.ipynb`: Notebook for one-dimensional financial time series data, such as stock prices or index returns.
-- multidim.ipynb`: Notebook for multidimensional financial time series data, such as image sequences or high-dimensional market data.
+- `multidim.ipynb`: Notebook for multidimensional financial time series data, such as image sequences or high-dimensional market data.
 
 
 ## Performance evaluation
