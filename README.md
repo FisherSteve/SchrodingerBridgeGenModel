@@ -1,15 +1,16 @@
-# Applying Schrödinger Bridge Methods to Generative Modeling of Financial Time Series
+# Application of Schrödinger bridge methods to the generative modelling of time series 
 
-## Acknowledgment
-This repository builds upon the code and methodology proposed by Hamdouche, Mohamed, Henry-Labordere, Pierre, and Pham, Huyen in their paper "Generative Modeling for Time Series Via Schrödinger Bridge" (April 7, 2023). The original paper serves as the foundation for the implementation and experimentation carried out in this project.
+## Acknowledgements
+This repository builds on the code and methodology proposed by Hamdouche, Mohamed, Henry-Labordere, Pierre, and Pham, Huyen in their paper "Generative Modelling for Time Series Via Schrödinger Bridge" (7 April 2023). The original paper serves as the basis for the implementation and experiments carried out in this project.
 
 ## Introduction
-This repository presents an implementation of the Schrödinger bridge (SB) approach for generative modeling of financial time series. The SB method offers a novel framework for modeling time series data, leveraging entropic interpolation via optimal transport to capture the temporal dynamics of financial markets. 
+This repository presents an implementation of the Schrödinger Bridge (SB) approach to generative modelling of financial time series. The SB method provides a novel framework for modelling time series data, using entropic interpolation via optimal transport to capture, for example, the temporal dynamics of financial markets or to generate images. 
 
 ## Example
 
-Here is an example on how an RGB image is being generated with the SBTS.
-These animations were generated using a step parameters for the initial part of the data (i.e. skipping every m-th step), but no frames were skipped in the last 100 frames.
+Here is an example of how an RGB image is generated using the SBTS.
+These animations were generated using a step parameter for the initial part of the data (i.e. skipping every mth step), but no frames were skipped in the last 100 frames.
+
 
 <table>
   <tr>
@@ -29,25 +30,21 @@ These animations were generated using a step parameters for the initial part of 
   </tr>
 </table>
 
-
-
-
-
-
-## Implementation Details
-The code provided here is e.g. for financial time series data. It implements the SB approach described in the literature, offering functionalities to estimate the drift function from historical data samples and simulate synthetic time series data.
+## Implementation details
+The code provided here is for e.g. financial time series data. It implements the SB approach described in the literature and provides functionality to estimate the drift function from historical data samples and to simulate synthetic time series data.
 
 ### Notebooks
 - `onedim.ipynb`: Notebook for one-dimensional financial time series data, such as stock prices or index returns.
-- `multidim.ipynb`: Notebook for multidimensional financial time series data, such as image sequences or high-dimensional market data.
+- multidim.ipynb`: Notebook for multidimensional financial time series data, such as image sequences or high-dimensional market data.
 
 
-## Performance Evaluation
-The performance of the generative model is evaluated through various experiments on financial datasets, assessing metrics such as accuracy, robustness, and applicability to real-world scenarios.
+## Performance evaluation
+The performance of the generative model is evaluated through various experiments on financial datasets, assessing metrics such as accuracy, robustness and applicability to real-world scenarios.
+
 
 
 ## Master's Thesis
-This project is part of a master's thesis titled "Applying Schrödinger Bridge Methods to Generative Modeling of Financial Time Series." The thesis aims to explore the effectiveness and practical implications of SB methods in financial data generation.
+This project is part of a master's thesis titled "Applying Schrödinger Bridge Methods to Generative Modeling of Time Series." The thesis aims to explore the effectiveness and practical implications of SB methods in financial data generation.
 
 ## Citation
 If you find this code useful for your research, please consider citing the original paper that inspired this work:
