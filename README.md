@@ -11,6 +11,13 @@ This repository presents an implementation of the Schrödinger bridge (SB) appro
 Here is a small example on how an RGB image is being generated with the SBTS
 
 ![Generated Animation](./images/created_animation_step10_last1500_11.gif)
+![Generated Animation](./images/created_animation_step10_last1500.gif)
+![Generated Animation](./images/created_animation_step10_last1500_1.gif)
+![Generated Animation](./images/created_animation_step10_last1500_2.gif)
+![Generated Animation](./images/created_animation_step10_last1500_3.gif)
+![Generated Animation](./images/created_animation_step10_last1500_4.gif)
+![Generated Animation](./images/created_animation_step10_last1500_8.gif)
+
 
 ## Implementation Details
 The code provided here is e.g. for financial time series data. It implements the SB approach described in the literature, offering functionalities to estimate the drift function from historical data samples and simulate synthetic time series data.
