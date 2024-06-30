@@ -10,6 +10,9 @@ This repository presents an implementation of the Schrödinger bridge (SB) appro
 
 Here is a small example on how an RGB image is being generated with the SBTS
 
+<img src="./images/created_animation_step10_last1500_11.gif" alt="Generated Animation" width="200"/>
+
+
 ![Generated Animation](./images/created_animation_step10_last1500_11.gif)
 ![Generated Animation](./images/created_animation_step10_last1500.gif)
 ![Generated Animation](./images/created_animation_step10_last1500_1.gif)
