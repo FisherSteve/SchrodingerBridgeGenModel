@@ -1,4 +1,4 @@
-# Application of Schrödinger bridge methods to the generative modelling of time series 
+# Applying Schrödinger Bridge Methods to Generative Modeling of Time Series
 
 ## Acknowledgements
 This repository builds on the code and methodology proposed by Hamdouche, Mohamed, Henry-Labordere, Pierre, and Pham, Huyen in their paper "Generative Modelling for Time Series Via Schrödinger Bridge" (7 April 2023). The original paper serves as the basis for the implementation and experiments carried out in this project.
@@ -44,7 +44,7 @@ The performance of the generative model is evaluated through various experiments
 
 
 ## Master's Thesis
-This project is part of a master's thesis titled "Applying Schrödinger Bridge Methods to Generative Modeling of Time Series." The thesis aims to explore the effectiveness and practical implications of SB methods in financial data generation.
+This project is part of a master's thesis titled "Applying Schrödinger Bridge Methods to Generative Modeling of Time Series" The thesis aims to explore the effectiveness and practical implications of SB methods in financial data generation.
 
 ## Citation
 If you find this code useful for your research, please consider citing the original paper that inspired this work:
