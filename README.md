@@ -10,16 +10,28 @@ This repository presents an implementation of the Schrödinger bridge (SB) appro
 
 Here is a small example on how an RGB image is being generated with the SBTS
 
-<img src="./images/created_animation_step10_last1500_11.gif" alt="Generated Animation" width="200"/>
+<table>
+  <tr>
+    <td><img src="./images/created_animation_step10_last1500.gif" alt="Generated Animation" width="200"/></td>
+    <td><img src="./images/created_animation_step10_last1500_1.gif" alt="Generated Animation" width="200"/></td>
+    <td><img src="./images/created_animation_step10_last1500_2.gif" alt="Generated Animation" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="./images/created_animation_step10_last1500_3.gif" alt="Generated Animation" width="200"/></td>
+    <td><img src="./images/created_animation_step10_last1500_5.gif" alt="Generated Animation" width="200"/></td>
+    <td><img src="./images/created_animation_step10_last1500_8.gif" alt="Generated Animation" width="200"/></td>
+  </tr>
+  <tr>
+    <td><img src="./images/created_animation_step10_last1500_11.gif" alt="Generated Animation" width="200"/></td>
+    <td><img src="./images/created_animation_step10_last1500_12.gif" alt="Generated Animation" width="200"/></td>
+    <td><img src="./images/created_animation_step10_last1500_13.gif" alt="Generated Animation" width="200"/></td>
+  </tr>
+</table>
 
 
-![Generated Animation](./images/created_animation_step10_last1500_11.gif)
-![Generated Animation](./images/created_animation_step10_last1500.gif)
-![Generated Animation](./images/created_animation_step10_last1500_1.gif)
-![Generated Animation](./images/created_animation_step10_last1500_2.gif)
-![Generated Animation](./images/created_animation_step10_last1500_3.gif)
-![Generated Animation](./images/created_animation_step10_last1500_4.gif)
-![Generated Animation](./images/created_animation_step10_last1500_8.gif)
+
+
+
 
 
 ## Implementation Details
