@@ -44,7 +44,7 @@ The performance of the generative model is evaluated through various experiments
 
 
 ## Master's Thesis
-This project is part of a master's thesis titled "Applying Schrödinger Bridge Methods to Generative Modeling of Time Series" The thesis aims to explore the effectiveness and practical implications of SB methods in financial data generation.
+This project is part of a master's thesis titled "Applying Schrödinger Bridge Methods to Generative Modeling of Time Series" The thesis aims to explore the effectiveness and practical implications of SB methods in data generation.
 
 ## Citation
 If you find this code useful for your research, please consider citing the original paper that inspired this work:
