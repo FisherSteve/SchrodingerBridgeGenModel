@@ -1,7 +1,7 @@
 # Applying Schrödinger Bridge Methods to Generative Modeling of Time Series
 
 ## Acknowledgements
-This repository builds on the code and methodology proposed by Hamdouche, Mohamed, Henry-Labordere, Pierre, and Pham, Huyen in their paper "Generative Modelling for Time Series Via Schrödinger Bridge" (7 April 2023). The original paper serves as the basis for the implementation and experiments carried out in this project.
+This repository builds on the code and methodology proposed by Hamdouche, Mohamed, Henry-Labordere, Pierre, and Pham, Huyen in their paper "Generative Modelling for Time Series Via Schrödinger Bridge" (7 April 2023). The original paper and code serves as the basis for the implementation and experiments carried out in this project.
 
 ## Introduction
 This repository presents an implementation of the Schrödinger Bridge (SB) approach to generative modelling of financial time series. The SB method provides a novel framework for modelling time series data, using entropic interpolation via optimal transport to capture, for example, the temporal dynamics of financial markets or to generate images. 
