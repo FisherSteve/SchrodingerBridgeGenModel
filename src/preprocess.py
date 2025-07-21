@@ -1,8 +1,14 @@
+from typing import Iterable, Union
+
 import numpy as np
 import pandas as pd
 
 
-def preprocess_prices(prices, window_size, log_returns=True):
+def preprocess_prices(
+    prices: Union[pd.Series, pd.DataFrame, Iterable[float], np.ndarray],
+    window_size: int,
+    log_returns: bool = True,
+) -> np.ndarray:
     """Return time series windows for :class:`SchrodingerBridge`.
 
     Parameters
@@ -29,8 +35,8 @@ def preprocess_prices(prices, window_size, log_returns=True):
     >>> from src.preprocess import preprocess_prices
     >>> data = yf.download("MSFT", start="2010-01-01", end="2020-01-30")
     >>> windows = preprocess_prices(data["Adj Close"], window_size=60)
-    >>> sb = SchrodingerBridge(distSize=60, nbpaths=windows.shape[0],
-    ...                        timeSeriesData=windows)
+    >>> sb = SchrodingerBridge(dist_size=60, nb_paths=windows.shape[0],
+    ...                        time_series_data=windows)
     """
     arr = np.asarray(prices)
     if isinstance(prices, (pd.Series, pd.DataFrame)):

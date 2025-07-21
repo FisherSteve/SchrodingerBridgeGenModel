@@ -1,3 +1,7 @@
+"""Schr\u00f6dinger bridge model implementations."""
+
+from typing import Iterable, Optional
+
 import numpy as np
 from tqdm import tqdm
 
@@ -10,18 +14,42 @@ from .sb_utils import (
 )
 
 class SchrodingerBridgeMulti:
-    def __init__(self, distSize, nbpaths, dimension, timeSeriesDataVector, kernel_type='default'):
-        
-        self.distSize = distSize
-        self.nbpaths = nbpaths
+    """Vectorised multi-dimensional Schr\u00f6dinger bridge simulation."""
+
+    def __init__(
+        self,
+        dist_size: int,
+        nb_paths: int,
+        dimension: int,
+        time_series_data_vector: Iterable[Iterable[Iterable[float]]],
+        kernel_type: str = "default",
+    ) -> None:
+        """Construct the simulator.
+
+        Parameters
+        ----------
+        dist_size:
+            Number of time intervals in each path.
+        nb_paths:
+            Number of reference paths.
+        dimension:
+            Dimension of each path observation.
+        time_series_data_vector:
+            Reference trajectories of shape ``(nb_paths, dist_size + 1, dimension)``.
+        kernel_type:
+            Name of the kernel to use.
+        """
+
+        self.dist_size = dist_size
+        self.nb_paths = nb_paths
         self.dimension = dimension
-        self.timeSeriesDataVector = np.array(timeSeriesDataVector)
+        self.time_series_data_vector = np.array(time_series_data_vector)
 
-        self.timeSeriesVector = np.zeros((distSize + 1, dimension))
-        self.timeSeriesVector[0, :] = self.timeSeriesDataVector[0, 0, :]
+        self.time_series_vector = np.zeros((dist_size + 1, dimension))
+        self.time_series_vector[0, :] = self.time_series_data_vector[0, 0, :]
 
-        self.weights = np.ones(nbpaths) / nbpaths
-        self.weights_tilde = np.zeros(nbpaths)
+        self.weights = np.ones(nb_paths) / nb_paths
+        self.weights_tilde = np.zeros(nb_paths)
 
         # Kernel selection
         if kernel_type == 'default':
@@ -35,59 +63,102 @@ class SchrodingerBridgeMulti:
         else:
             raise ValueError("Unsupported kernel type: {}".format(kernel_type))
 
-    def schedule(self, timeEuler, maturity, timestep):
-        sb_schedule(timeEuler, maturity, timestep)
+    def schedule(self, time_euler: list, maturity: float, timestep: float) -> None:
+        """Populate ``time_euler`` with a schedule of time points."""
 
-    def simulate_kernel_vectorized(self, nbStepsPerDeltati, H, deltati):
-        vtimestepEuler = np.arange(0, deltati + deltati / nbStepsPerDeltati, deltati / nbStepsPerDeltati)
-        Brownian = np.random.normal(0, 1, (self.distSize * len(vtimestepEuler) - 1, self.dimension))
+        sb_schedule(time_euler, maturity, timestep)
+
+    def simulate_kernel_vectorized(
+        self,
+        nb_steps_per_deltati: int,
+        h: float,
+        delta_ti: float,
+    ) -> np.ndarray:
+        """Simulate one path using the vectorised algorithm."""
+
+        vtimestepEuler = np.arange(0, delta_ti + delta_ti / nb_steps_per_deltati, delta_ti / nb_steps_per_deltati)
+        Brownian = np.random.normal(0, 1, (self.dist_size * len(vtimestepEuler) - 1, self.dimension))
 
         X_ = np.zeros(self.dimension)
         index_ = 0
 
-        for interval in tqdm(range(self.distSize), desc="Intervals"):
+        for interval in tqdm(range(self.dist_size), desc="Intervals"):
             if interval > 0:
-                diffs = self.timeSeriesDataVector[:, interval, :] - X_
-                self.weights *= self.kernel(diffs, H).prod(axis=1)
+                diffs = self.time_series_data_vector[:, interval, :] - X_
+                self.weights *= self.kernel(diffs, h).prod(axis=1)
 
-            self.weights_tilde = self.weights * np.exp(np.sum((self.timeSeriesDataVector[:, interval + 1, :] - X_) ** 2, axis=1) / (2.0 * deltati))
+            self.weights_tilde = self.weights * np.exp(
+                np.sum((self.time_series_data_vector[:, interval + 1, :] - X_) ** 2, axis=1)
+                / (2.0 * delta_ti)
+            )
 
             for nbtime in range(len(vtimestepEuler) - 1):
                 timeprev = vtimestepEuler[nbtime]
                 timestep = vtimestepEuler[nbtime + 1] - vtimestepEuler[nbtime]
 
-                exp_factors = np.exp(-np.sum((self.timeSeriesDataVector[:, interval + 1, :] - X_) ** 2, axis=1) / (2.0 * (deltati - timeprev)))
+                exp_factors = np.exp(
+                    -np.sum((self.time_series_data_vector[:, interval + 1, :] - X_) ** 2, axis=1)
+                    / (2.0 * (delta_ti - timeprev))
+                )
                 expecX = np.dot(self.weights_tilde, exp_factors)
-                numerator = np.dot(self.weights_tilde * exp_factors, self.timeSeriesDataVector[:, interval + 1, :] - X_)
+                numerator = np.dot(
+                    self.weights_tilde * exp_factors,
+                    self.time_series_data_vector[:, interval + 1, :] - X_,
+                )
 
                 timestepsqrt = np.sqrt(timestep)
                 if expecX > 0.0:
-                    drift = (1.0 / (deltati - timeprev)) * (numerator / expecX)
+                    drift = (1.0 / (delta_ti - timeprev)) * (numerator / expecX)
                 else:
                     drift = np.zeros(self.dimension)
 
                 X_ += drift * timestep + Brownian[index_] * timestepsqrt
                 index_ += 1
 
-            self.timeSeriesVector[interval + 1] = X_
+            self.time_series_vector[interval + 1] = X_
 
-        return self.timeSeriesVector
+        return self.time_series_vector
 
 
 
 class SchrodingerBridge:
-    def __init__(self, distSize, nbpaths, timeSeriesData=None, dimension=None, kernel_type='default'):
-        self.distSize = distSize
-        self.nbpaths = nbpaths
+    """One-dimensional Schr\u00f6dinger bridge simulator."""
+
+    def __init__(
+        self,
+        dist_size: int,
+        nb_paths: int,
+        time_series_data: Optional[Iterable[Iterable[float]]] = None,
+        dimension: Optional[int] = None,
+        kernel_type: str = "default",
+    ) -> None:
+        """Create a simulator for one-dimensional paths.
+
+        Parameters
+        ----------
+        dist_size:
+            Number of time intervals in each path.
+        nb_paths:
+            Number of reference paths.
+        time_series_data:
+            Array-like containing the reference trajectories.
+        dimension:
+            Dimension of the reference data when ``time_series_data`` is not provided.
+        kernel_type:
+            Name of the kernel to use.
+        """
+
+        self.dist_size = dist_size
+        self.nb_paths = nb_paths
         self.dimension = dimension
 
-        if timeSeriesData is not None:
-            self.timeSeriesData = np.array(timeSeriesData)
+        if time_series_data is not None:
+            self.time_series_data = np.array(time_series_data)
         else:
-            self.timeSeriesData = None
+            self.time_series_data = None
 
-        self.weights = np.ones(nbpaths) / nbpaths
-        self.weights_tilde = np.zeros(nbpaths)
+        self.weights = np.ones(nb_paths) / nb_paths
+        self.weights_tilde = np.zeros(nb_paths)
     
         # Kernel selection
         if kernel_type == 'default':
@@ -101,23 +172,34 @@ class SchrodingerBridge:
         else:
             raise ValueError("Unsupported kernel type: {}".format(kernel_type))
 
-    def simulate_kernel(self, nbStepsPerDeltati, H, deltati):
-        vtimestepEuler = np.arange(0, deltati + deltati / nbStepsPerDeltati, deltati / nbStepsPerDeltati)
-        Brownian = np.random.normal(0, 1, self.distSize * len(vtimestepEuler) - 1)
+    def simulate_kernel(
+        self,
+        nb_steps_per_deltati: int,
+        h: float,
+        delta_ti: float,
+    ) -> np.ndarray:
+        """Simulate one path using the original iterative algorithm."""
 
-        timeSeries = np.zeros(self.distSize + 1)
-        timeSeries[0] = self.timeSeriesData[0, 0]
-        X_ = timeSeries[0]
+        vtimestepEuler = np.arange(0, delta_ti + delta_ti / nb_steps_per_deltati, delta_ti / nb_steps_per_deltati)
+        Brownian = np.random.normal(0, 1, self.dist_size * len(vtimestepEuler) - 1)
+
+        time_series = np.zeros(self.dist_size + 1)
+        time_series[0] = self.time_series_data[0, 0]
+        X_ = time_series[0]
         index_ = 0
 
-        for interval in range(self.distSize):
-            for particle in range(self.timeSeriesData.shape[0]):
+        for interval in range(self.dist_size):
+            for particle in range(self.time_series_data.shape[0]):
                 if interval == 0:
-                    self.weights[particle] = 1.0 / self.nbpaths
+                    self.weights[particle] = 1.0 / self.nb_paths
                 else:
-                    self.weights[particle] *= self.kernel(self.timeSeriesData[particle, interval] - X_, H)
+                    self.weights[particle] *= self.kernel(
+                        self.time_series_data[particle, interval] - X_, h
+                    )
 
-                self.weights_tilde[particle] = self.weights[particle] * np.exp((self.timeSeriesData[particle, interval + 1] - X_) ** 2 / (2.0 * deltati))
+                self.weights_tilde[particle] = self.weights[particle] * np.exp(
+                    (self.time_series_data[particle, interval + 1] - X_) ** 2 / (2.0 * delta_ti)
+                )
 
             for nbtime in range(len(vtimestepEuler) - 1):
                 expecY = 0.0
@@ -125,23 +207,31 @@ class SchrodingerBridge:
                 timeprev = vtimestepEuler[nbtime]
                 timestep = vtimestepEuler[nbtime + 1] - vtimestepEuler[nbtime]
 
-                for particle in range(self.timeSeriesData.shape[0]):
+                for particle in range(self.time_series_data.shape[0]):
                     if nbtime == 0:
                         expecX += self.weights[particle]
-                        expecY += self.weights[particle] * (self.timeSeriesData[particle, interval + 1] - X_)
+                        expecY += self.weights[particle] * (
+                            self.time_series_data[particle, interval + 1] - X_
+                        )
                     else:
-                        termtoadd = -(self.timeSeriesData[particle, interval + 1] - X_) ** 2 / (2.0 * (deltati - timeprev))
+                        termtoadd = -(
+                            self.time_series_data[particle, interval + 1] - X_
+                        ) ** 2 / (2.0 * (delta_ti - timeprev))
                         termtoadd = self.weights_tilde[particle] * np.exp(termtoadd)
                         expecX += termtoadd
-                        expecY += termtoadd * (self.timeSeriesData[particle, interval + 1] - X_)
+                        expecY += termtoadd * (
+                            self.time_series_data[particle, interval + 1] - X_
+                        )
 
-                drift = (1.0 / (deltati - timeprev)) * (expecY / expecX) if expecX > 0.0 else 0.0
+                drift = (1.0 / (delta_ti - timeprev)) * (expecY / expecX) if expecX > 0.0 else 0.0
                 X_ += drift * timestep + Brownian[index_] * np.sqrt(timestep)
                 index_ += 1
 
-            timeSeries[interval + 1] = X_
+            time_series[interval + 1] = X_
 
-        return timeSeries
+        return time_series
 
-    def schedule(self, timeEuler, maturity, timestep):
-        sb_schedule(timeEuler, maturity, timestep)
+    def schedule(self, time_euler: list, maturity: float, timestep: float) -> None:
+        """Populate ``time_euler`` with a schedule of time points."""
+
+        sb_schedule(time_euler, maturity, timestep)
