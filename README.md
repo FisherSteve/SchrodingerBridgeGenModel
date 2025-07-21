@@ -65,6 +65,18 @@ The code provided here is for e.g. financial time series data. It implements the
 - `onedim.ipynb`: Notebook for one-dimensional financial time series data, such as stock prices or index returns.
 - `multidim.ipynb`: Notebook for multidimensional financial time series data, such as image sequences or high-dimensional market data.
 
+## Preprocessing price data
+Use the `preprocess_prices` helper to transform raw price series into the array format expected by `SchrodingerBridge`.
+
+```python
+from src.preprocess import preprocess_prices
+
+windows = preprocess_prices(data["Adj Close"], window_size=60)
+bridge = SchrodingerBridge(distSize=60, nbpaths=windows.shape[0],
+                           timeSeriesData=windows)
+```
+
+
 ## Running the notebooks and scripts
 1. Activate your environment and install the requirements as shown above.
 2. Start Jupyter and open the desired notebook:
