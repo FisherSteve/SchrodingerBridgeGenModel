@@ -1,0 +1,13 @@
+# Ignore images and media
+images/
+*.gif
+*.ipynb
+*.pdf
+
+# Python cache and compiled files
+__pycache__/
+*.pyc
+
+# Environment files
+.env
+
