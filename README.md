@@ -20,6 +20,7 @@ pybind11==2.9.1
 scikit-learn==1.4.1
 scipy==1.12.0
 seaborn==0.13.2
+statsmodels==0.14.0
 tensorflow==2.16.1
 tqdm==4.66.2
 yfinance==0.2.40
