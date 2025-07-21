@@ -4,7 +4,35 @@
 This repository builds on the code and methodology proposed by Hamdouche, Mohamed, Henry-Labordere, Pierre, and Pham, Huyen in their paper "Generative Modelling for Time Series Via Schrödinger Bridge" (7 April 2023). The original paper and code serves as the basis for the implementation and experiments carried out in this project.
 
 ## Introduction
-This repository presents an implementation of the Schrödinger Bridge (SB) approach to generative modelling of financial time series. The SB method provides a novel framework for modelling time series data, using entropic interpolation via optimal transport to capture, for example, the temporal dynamics of financial markets or to generate images. 
+This repository presents an implementation of the Schrödinger Bridge (SB) approach to generative modelling of financial time series. The SB method provides a novel framework for modelling time series data, using entropic interpolation via optimal transport to capture, for example, the temporal dynamics of financial markets or to generate images.
+
+## Requirements
+The code was developed for **Python 3.10** and depends on the packages listed in
+`requirements.txt`:
+
+```
+fbm==0.3.0
+matplotlib==3.9.0
+numpy==1.26.4
+pandas==2.2.1
+pandas-datareader==0.10.0
+pybind11==2.9.1
+scikit-learn==1.4.1
+scipy==1.12.0
+seaborn==0.13.2
+tensorflow==2.16.1
+tqdm==4.66.2
+yfinance==0.2.40
+```
+
+Install all dependencies with:
+
+```bash
+pip install -r requirements.txt
+```
+
+It is recommended to create a virtual environment beforehand, e.g. using
+`python3 -m venv sb_env` and `source sb_env/bin/activate`.
 
 ## Example
 
@@ -36,6 +64,29 @@ The code provided here is for e.g. financial time series data. It implements the
 ### Notebooks
 - `onedim.ipynb`: Notebook for one-dimensional financial time series data, such as stock prices or index returns.
 - `multidim.ipynb`: Notebook for multidimensional financial time series data, such as image sequences or high-dimensional market data.
+
+## Running the notebooks and scripts
+1. Activate your environment and install the requirements as shown above.
+2. Start Jupyter and open the desired notebook:
+
+   ```bash
+   jupyter notebook onedim.ipynb
+   ```
+
+   or
+
+   ```bash
+   jupyter notebook multidim.ipynb
+   ```
+
+   The one-dimensional notebook downloads Microsoft stock prices from Yahoo Finance using `yfinance`, while the multidimensional notebook loads image data from the `fashion_mnist` or `cifar10` datasets provided by TensorFlow.
+3. After generating sample paths you can create GIF animations from the results:
+
+   ```bash
+   python animation_creation.py
+   ```
+
+   The script expects the data arrays created in the notebooks and saves the resulting GIFs to the `images/` directory.
 
 
 ## Performance evaluation
