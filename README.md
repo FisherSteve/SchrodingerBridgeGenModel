@@ -101,3 +101,7 @@ This project is part of a master's thesis titled "Applying Schrödinger Bridge M
 If you find this code useful for your research, please consider citing the original paper that inspired this work:
 Hamdouche, Mohamed, Henry-Labordere, Pierre, and Pham, Huyen. "Generative Modeling for Time Series Via Schrödinger Bridge" (April 7, 2023). Available at SSRN: https://ssrn.com/abstract=4412434 or http://dx.doi.org/10.2139/ssrn.4412434
 
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
