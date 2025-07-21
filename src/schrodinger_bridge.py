@@ -18,7 +18,8 @@ class SchrodingerBridgeMulti:
         self.timeSeriesDataVector = np.array(timeSeriesDataVector)
 
         self.timeSeriesVector = np.zeros((distSize + 1, dimension))
-        self.timeSeriesVector[0, :] = self.timeSeriesDataVector[0, 0, :]
+        # start generated paths at the origin
+        self.timeSeriesVector[0, :] = np.zeros(self.dimension)
 
         self.weights = np.ones(nbpaths) / nbpaths
         self.weights_tilde = np.zeros(nbpaths)
@@ -40,13 +41,18 @@ class SchrodingerBridgeMulti:
 
     def simulate_kernel_vectorized(self, nbStepsPerDeltati, H, deltati):
         vtimestepEuler = np.arange(0, deltati + deltati / nbStepsPerDeltati, deltati / nbStepsPerDeltati)
-        Brownian = np.random.normal(0, 1, (self.distSize * len(vtimestepEuler) - 1, self.dimension))
+        Brownian = np.random.normal(
+            0, 1, (self.distSize * (len(vtimestepEuler) - 1), self.dimension)
+        )
 
         X_ = np.zeros(self.dimension)
         index_ = 0
 
         for interval in tqdm(range(self.distSize), desc="Intervals"):
-            if interval > 0:
+            if interval == 0:
+                # reset weights for the first interval
+                self.weights[:] = 1.0 / self.nbpaths
+            else:
                 diffs = self.timeSeriesDataVector[:, interval, :] - X_
                 self.weights *= self.kernel(diffs, H).prod(axis=1)
 
@@ -103,7 +109,7 @@ class SchrodingerBridge:
 
     def simulate_kernel(self, nbStepsPerDeltati, H, deltati):
         vtimestepEuler = np.arange(0, deltati + deltati / nbStepsPerDeltati, deltati / nbStepsPerDeltati)
-        Brownian = np.random.normal(0, 1, self.distSize * len(vtimestepEuler) - 1)
+        Brownian = np.random.normal(0, 1, self.distSize * (len(vtimestepEuler) - 1))
 
         timeSeries = np.zeros(self.distSize + 1)
         timeSeries[0] = self.timeSeriesData[0, 0]
