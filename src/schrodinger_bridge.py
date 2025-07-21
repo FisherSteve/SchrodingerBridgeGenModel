@@ -1,13 +1,7 @@
 import numpy as np
 from tqdm import tqdm
 
-from .sb_utils import (
-    default_kernel,
-    gaussian_kernel,
-    laplacian_kernel,
-    polynomial_kernel,
-    schedule as sb_schedule,
-)
+from .sb_utils import KERNELS, schedule as sb_schedule
 
 class SchrodingerBridgeMulti:
     def __init__(self, distSize, nbpaths, dimension, timeSeriesDataVector, kernel_type='default'):
@@ -25,16 +19,10 @@ class SchrodingerBridgeMulti:
         self.weights_tilde = np.zeros(nbpaths)
 
         # Kernel selection
-        if kernel_type == 'default':
-            self.kernel = default_kernel
-        elif kernel_type == 'gaussian':
-            self.kernel = gaussian_kernel
-        elif kernel_type == 'laplacian':
-            self.kernel = laplacian_kernel
-        elif kernel_type == 'polynomial':
-            self.kernel = polynomial_kernel
-        else:
-            raise ValueError("Unsupported kernel type: {}".format(kernel_type))
+        try:
+            self.kernel = KERNELS[kernel_type]
+        except KeyError:
+            raise KeyError(f"Unknown kernel type: {kernel_type}")
 
     def schedule(self, timeEuler, maturity, timestep):
         sb_schedule(timeEuler, maturity, timestep)
@@ -96,16 +84,10 @@ class SchrodingerBridge:
         self.weights_tilde = np.zeros(nbpaths)
     
         # Kernel selection
-        if kernel_type == 'default':
-            self.kernel = default_kernel
-        elif kernel_type == 'gaussian':
-            self.kernel = gaussian_kernel
-        elif kernel_type == 'laplacian':
-            self.kernel = laplacian_kernel
-        elif kernel_type == 'polynomial':
-            self.kernel = polynomial_kernel
-        else:
-            raise ValueError("Unsupported kernel type: {}".format(kernel_type))
+        try:
+            self.kernel = KERNELS[kernel_type]
+        except KeyError:
+            raise KeyError(f"Unknown kernel type: {kernel_type}")
 
     def simulate_kernel(self, nbStepsPerDeltati, H, deltati):
         vtimestepEuler = np.arange(0, deltati + deltati / nbStepsPerDeltati, deltati / nbStepsPerDeltati)

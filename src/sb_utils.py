@@ -21,6 +21,15 @@ def polynomial_kernel(x, H, degree=3):
     return (1 + x / H) ** degree
 
 
+# Mapping of kernel names to their corresponding implementations
+KERNELS = {
+    "default": default_kernel,
+    "gaussian": gaussian_kernel,
+    "laplacian": laplacian_kernel,
+    "polynomial": polynomial_kernel,
+}
+
+
 def schedule(timeEuler, maturity, timestep):
     """Append time points to ``timeEuler`` from 0 to ``maturity``."""
     timeEuler.extend(np.arange(0, maturity, timestep))
