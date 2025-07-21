@@ -100,6 +100,15 @@ bridge = SchrodingerBridge(distSize=60, nbpaths=windows.shape[0],
 
    The script expects the data arrays created in the notebooks and saves the resulting GIFs to the `images/` directory.
 
+For a quick demonstration using randomly generated data, run the following script:
+
+```bash
+python demo_animation.py
+```
+
+This will create a GIF named `demo_square.gif` inside the `images/` folder.
+
+
 
 ## Performance evaluation
 The performance of the generative model is evaluated through various experiments on financial datasets, assessing metrics such as accuracy, robustness and applicability to real-world scenarios.
