@@ -1,6 +1,14 @@
 import numpy as np
 from tqdm import tqdm
 
+from .sb_utils import (
+    default_kernel,
+    gaussian_kernel,
+    laplacian_kernel,
+    polynomial_kernel,
+    schedule as sb_schedule,
+)
+
 class SchrodingerBridgeMulti:
     def __init__(self, distSize, nbpaths, dimension, timeSeriesDataVector, kernel_type='default'):
         
@@ -17,36 +25,18 @@ class SchrodingerBridgeMulti:
 
         # Kernel selection
         if kernel_type == 'default':
-            self.kernel = self.default_kernel
+            self.kernel = default_kernel
         elif kernel_type == 'gaussian':
-            self.kernel = self.gaussian_kernel
+            self.kernel = gaussian_kernel
         elif kernel_type == 'laplacian':
-            self.kernel = self.laplacian_kernel
+            self.kernel = laplacian_kernel
         elif kernel_type == 'polynomial':
-            self.kernel = self.polynomial_kernel
+            self.kernel = polynomial_kernel
         else:
             raise ValueError("Unsupported kernel type: {}".format(kernel_type))
 
-    @staticmethod
-    def default_kernel(x, H):
-        return np.where(np.abs(x) < H, (H * H - x * x) ** 2, 0.0)
-
-    @staticmethod
-    def gaussian_kernel(x, H):
-        return np.exp(-(x ** 2) / (2 * H ** 2)) / (np.sqrt(2 * np.pi * H ** 2))
-
-    @staticmethod
-    def laplacian_kernel(x, H):
-        return np.exp(-np.abs(x) / H) / (2 * H)
-
-    @staticmethod
-    def polynomial_kernel(x, H, degree=3):
-        return (1 + x / H) ** degree
-
     def schedule(self, timeEuler, maturity, timestep):
-        time_ = np.arange(0, maturity, timestep)
-        timeEuler.extend(time_)
-        timeEuler.append(maturity)
+        sb_schedule(timeEuler, maturity, timestep)
 
     def simulate_kernel_vectorized(self, nbStepsPerDeltati, H, deltati):
         vtimestepEuler = np.arange(0, deltati + deltati / nbStepsPerDeltati, deltati / nbStepsPerDeltati)
@@ -101,13 +91,13 @@ class SchrodingerBridge:
     
         # Kernel selection
         if kernel_type == 'default':
-            self.kernel = self.default_kernel
+            self.kernel = default_kernel
         elif kernel_type == 'gaussian':
-            self.kernel = self.gaussian_kernel
+            self.kernel = gaussian_kernel
         elif kernel_type == 'laplacian':
-            self.kernel = self.laplacian_kernel
+            self.kernel = laplacian_kernel
         elif kernel_type == 'polynomial':
-            self.kernel = self.polynomial_kernel
+            self.kernel = polynomial_kernel
         else:
             raise ValueError("Unsupported kernel type: {}".format(kernel_type))
 
@@ -153,25 +143,5 @@ class SchrodingerBridge:
 
         return timeSeries
 
-    @staticmethod
-    def default_kernel(x, H):
-        return (H * H - x * x) ** 2 if abs(x) < H else 0.0
-
-    @staticmethod
-    def gaussian_kernel(x, H):
-        return np.exp(-(x ** 2) / (2 * H ** 2)) / (np.sqrt(2 * np.pi * H ** 2))
-
-    @staticmethod
-    def laplacian_kernel(x, H):
-        return np.exp(-abs(x) / H) / (2 * H)
-
-    @staticmethod
-    def polynomial_kernel(x, H, degree=3):
-        return (1 + x / H) ** degree
-
     def schedule(self, timeEuler, maturity, timestep):
-        time_ = 0.0
-        while time_ < maturity:
-            timeEuler.append(time_)
-            time_ += timestep
-        timeEuler.append(maturity)
+        sb_schedule(timeEuler, maturity, timestep)
