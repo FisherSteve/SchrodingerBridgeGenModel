@@ -1,4 +1,5 @@
 import matplotlib.animation as animation
+import matplotlib.pyplot as plt
 import os
 
 def get_unique_filename(base_name, extension, step=1, last_n=None, directory="images"):
